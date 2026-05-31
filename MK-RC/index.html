@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MK Racing Factory | Motorsport Performance</title>
+  <meta name="description" content="MK Racing Factory - tuning, motorsport, track setup, wizualizacje i projekty aut drogowych oraz torowych." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #030305;
+      --black-2: #08080b;
+      --graphite: #111118;
+      --graphite-2: #191920;
+      --gold: #d6ad43;
+      --gold-soft: #f2d37b;
+      --red: #a80f18;
+      --white: #f6f3eb;
+      --muted: #9d9da6;
+      --line: rgba(255, 255, 255, 0.10);
+      --line-gold: rgba(214, 173, 67, 0.35);
+      --shadow: 0 34px 110px rgba(0, 0, 0, 0.65);
+      --container: 1280px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 82% 0%, rgba(214, 173, 67, 0.16), transparent 34rem),
+        radial-gradient(circle at 0% 22%, rgba(168, 15, 24, 0.17), transparent 28rem),
+        linear-gradient(180deg, #030305 0%, #09090d 52%, #030305 100%);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.85), transparent 78%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto -20vw -32vh -20vw;
+      height: 52vh;
+      z-index: -1;
+      background: radial-gradient(ellipse at center, rgba(214,173,67,.13), transparent 65%);
+      pointer-events: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(var(--container), calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 0;
+      right: 0;
+      z-index: 80;
+      pointer-events: none;
+    }
+
+    .nav-box {
+      pointer-events: auto;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 12px 10px 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      background: rgba(5, 5, 8, .74);
+      box-shadow: 0 20px 60px rgba(0,0,0,.48);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      padding: 13px 13px;
+      border-radius: 12px;
+      color: #d8d8df;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background .18s ease, color .18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold-soft);
+      background: rgba(255,255,255,.06);
+    }
+
+    .nav-links .mail {
+      margin-left: 6px;
+      color: #111;
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: stretch;
+      overflow: hidden;
+      padding: 118px 0 44px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 62% center;
+      filter: saturate(1.04) contrast(1.08) brightness(.72);
+      transform: scale(1.02);
+    }
+
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(3,3,5,.94) 0%, rgba(3,3,5,.82) 36%, rgba(3,3,5,.35) 74%, rgba(3,3,5,.65) 100%),
+        linear-gradient(180deg, rgba(3,3,5,.24), #030305 96%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: -10vw;
+      top: 18vh;
+      width: 72vw;
+      height: 46vh;
+      background: linear-gradient(115deg, rgba(168,15,24,.32), transparent 64%);
+      transform: skewY(-8deg);
+      z-index: -1;
+      filter: blur(4px);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(340px, .55fr);
+      gap: 24px;
+      align-items: end;
+    }
+
+    .hero-copy {
+      min-width: 0;
+      padding-bottom: 34px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gold-soft);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 44px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-soft), transparent);
+    }
+
+    h1 {
+      max-width: 940px;
+      margin: 18px 0 18px;
+      font-size: clamp(54px, 9vw, 142px);
+      line-height: .78;
+      letter-spacing: -.085em;
+      text-transform: uppercase;
+    }
+
+    .hero-lead {
+      max-width: 650px;
+      color: #c5c5cc;
+      font-size: clamp(17px, 2vw, 22px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 0;
+      clip-path: polygon(9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%);
+      background: rgba(255,255,255,.045);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(214,173,67,.52);
+      background: rgba(255,255,255,.08);
+    }
+
+    .btn.gold {
+      color: #0b0b0d;
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+      border-color: rgba(214,173,67,.75);
+    }
+
+    .hero-panel {
+      min-width: 0;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(5,5,8,.70);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+    }
+
+    .hero-panel-head {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .hero-panel-head img {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+    }
+
+    .hero-panel-head strong {
+      display: block;
+      font-size: 26px;
+      line-height: .9;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-panel-head span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .spec-list {
+      display: grid;
+    }
+
+    .spec {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    .spec:last-child {
+      border-bottom: 0;
+    }
+
+    .spec b {
+      color: var(--white);
+      text-align: right;
+    }
+
+    .section {
+      padding: 94px 0;
+      position: relative;
+    }
+
+    .section-title {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 460px);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section-title h2 {
+      margin-top: 12px;
+      font-size: clamp(42px, 6vw, 86px);
+      line-height: .82;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .brand-strip {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+    }
+
+    .statement {
+      position: relative;
+      overflow: hidden;
+      min-height: 470px;
+      padding: clamp(26px, 5vw, 56px);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(214,173,67,.10), transparent 35%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)),
+        #101015;
+      box-shadow: var(--shadow);
+      clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
+    }
+
+    .statement h3 {
+      max-width: 660px;
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: .86;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+
+    .statement p {
+      max-width: 650px;
+      margin-top: 22px;
+      color: #b9b9c2;
+      font-size: 18px;
+    }
+
+    .statement ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+      list-style: none;
+    }
+
+    .statement li {
+      padding: 16px;
+      border-left: 2px solid var(--gold);
+      background: rgba(255,255,255,.04);
+      color: #e8e8ee;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .side-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 470px;
+      border: 1px solid var(--line);
+      background: #111;
+      box-shadow: var(--shadow);
+      clip-path: polygon(34px 0, 100% 0, 100% calc(100% - 34px), calc(100% - 34px) 100%, 0 100%, 0 34px);
+    }
+
+    .side-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .service {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)),
+        var(--graphite);
+      box-shadow: 0 22px 56px rgba(0,0,0,.38);
+      clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+    }
+
+    .service::before {
+      content: "";
+      position: absolute;
+      right: -54px;
+      top: -54px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(214,173,67,.18), transparent 68%);
+    }
+
+    .service small {
+      display: block;
+      margin-bottom: 74px;
+      color: var(--gold-soft);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .service h3 {
+      margin-bottom: 12px;
+      font-size: 28px;
+      line-height: .92;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .service p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .project {
+      position: relative;
+      grid-column: span 4;
+      min-height: 430px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #111;
+      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .project.wide {
+      grid-column: span 8;
+    }
+
+    .project img {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      transition: transform .45s ease, filter .45s ease;
+    }
+
+    .project:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.10) contrast(1.06);
+    }
+
+    .project::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(0,0,0,.88)),
+        linear-gradient(90deg, rgba(0,0,0,.30), transparent 55%);
+      pointer-events: none;
+    }
+
+    .project-info {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      padding: 18px;
+      border-left: 2px solid var(--gold);
+      background: rgba(3,3,5,.72);
+      backdrop-filter: blur(10px);
+    }
+
+    .project-info strong {
+      display: block;
+      font-size: 26px;
+      line-height: .9;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .project-info span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      padding-bottom: 110px;
+    }
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border: 1px solid var(--line-gold);
+      background:
+        linear-gradient(135deg, rgba(214,173,67,.14), transparent 32%),
+        #0b0b0f;
+      box-shadow: var(--shadow);
+      clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 44px, 100% 100%, 44px 100%, 0 calc(100% - 44px));
+    }
+
+    .contact-copy {
+      padding: clamp(28px, 5vw, 64px);
+    }
+
+    .contact-copy h2 {
+      margin: 16px 0 14px;
+      font-size: clamp(42px, 6vw, 82px);
+      line-height: .82;
+      letter-spacing: -.07em;
+      text-transform: uppercase;
+    }
+
+    .contact-copy p {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 560px;
+    }
+
+    .contact-links {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      padding: clamp(28px, 5vw, 64px);
+      background: rgba(0,0,0,.28);
+      border-left: 1px solid rgba(255,255,255,.08);
+    }
+
+    .contact-link {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.035);
+      font-size: 15px;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-link span {
+      color: var(--gold-soft);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    footer {
+      padding: 28px 0 46px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-inner,
+      .section-title,
+      .brand-strip,
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        padding-top: 44px;
+      }
+
+      .hero-panel {
+        max-width: 620px;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .project,
+      .project.wide {
+        grid-column: span 6;
+      }
+
+      .contact-links {
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,.08);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .wrap {
+        width: min(var(--container), calc(100% - 22px));
+      }
+
+      .nav {
+        top: 10px;
+      }
+
+      .nav-box {
+        display: grid;
+        min-height: auto;
+      }
+
+      .nav-links {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 3px;
+      }
+
+      .nav-links .mail {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 144px;
+      }
+
+      .hero-panel {
+        clip-path: none;
+        border-radius: 18px;
+      }
+
+      .hero-panel-head {
+        grid-template-columns: 62px 1fr;
+      }
+
+      .hero-panel-head img {
+        width: 62px;
+        height: 62px;
+      }
+
+      .statement,
+      .side-photo,
+      .contact-card {
+        clip-path: none;
+        border-radius: 18px;
+      }
+
+      .statement ul,
+      .service-grid,
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .project,
+      .project.wide {
+        grid-column: auto;
+        min-height: 320px;
+      }
+
+      .service {
+        min-height: auto;
+      }
+
+      .service small {
+        margin-bottom: 44px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .brand strong {
+        font-size: 14px;
+      }
+
+      .brand span {
+        white-space: normal;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: clamp(50px, 16vw, 80px);
+      }
+
+      .hero-lead {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 68px 0;
+      }
+
+      .contact-link {
+        display: grid;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-box">
+      <a class="brand" href="#top" aria-label="MK Racing Factory">
+        <img src="assets/logo-mkrc.png" alt="Logo MK Racing Factory" />
+        <span>
+          <strong>MK Racing Factory</strong>
+          <span>Road & Track Performance</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Nawigacja">
+        <a href="#brand">Brand</a>
+        <a href="#program">Program</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a class="mail" href="mailto:biuro@mkrc.pl">biuro@mkrc.pl</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-bg">
+        <img src="assets/racecar-black-studio.png" alt="MK Racing Factory race car" />
+      </div>
+
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="kicker">MK Racing Factory</span>
+          <h1>Built for road. Tuned for track.</h1>
+          <p class="hero-lead">
+            Performance brand z Krakowa. Tuning, track setup, projekty drogowe, wizualizacje i auta zbudowane w mocnym motorsportowym stylu.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn gold" href="#contact">Kontakt</a>
+            <a class="btn" href="#projects">Projekty</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="MK Racing Factory">
+          <div class="hero-panel-head">
+            <img src="assets/logo-mkrc.png" alt="Logo MK Racing Factory" />
+            <span>
+              <strong>MKRC</strong>
+              <span>Motorsport division</span>
+            </span>
+          </div>
+
+          <div class="spec-list">
+            <div class="spec"><span>Focus</span><b>Street / Track</b></div>
+            <div class="spec"><span>Work</span><b>Tuning / Setup</b></div>
+            <div class="spec"><span>Design</span><b>Visual concepts</b></div>
+            <div class="spec"><span>Base</span><b>Kraków</b></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="brand" class="section">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <span class="kicker">Brand</span>
+            <h2>Tworzymy auta, które mają wyglądać i jechać.</h2>
+          </div>
+        </div>
+
+        <div class="brand-strip">
+          <div class="statement">
+            <h3>Zero losowych dokładek. Jeden spójny projekt.</h3>
+            <p>Auto ma mieć charakter. Droga, tor, show car, wizualizacja — każdy projekt dostaje kierunek i sensowną formę.</p>
+            <ul>
+              <li>tuning wizualny i techniczny</li>
+              <li>track setup i geometria</li>
+              <li>livery, koła, body, stance</li>
+              <li>wizualizacje dla klientów</li>
+            </ul>
+          </div>
+
+          <div class="side-photo">
+            <img src="assets/racecar-green-studio.png" alt="Zielony projekt samochodu wyścigowego" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="program" class="section">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <span class="kicker">Program</span>
+            <h2>Zakres prac.</h2>
+          </div>
+          
+        </div>
+
+        <div class="service-grid">
+          <article class="service">
+            <small>01 / Street</small>
+            <h3>Road performance</h3>
+            <p>Projekty drogowe z mocnym wyglądem. Auto ma robić robotę na ulicy, ale nadal mieć sens jako całość.</p>
+          </article>
+
+          <article class="service">
+            <small>02 / Track</small>
+            <h3>Track setup</h3>
+            <p>Zawieszenie, geometria, koła, opony, stance i kierunek konfiguracji pod szybszą jazdę.</p>
+          </article>
+
+          <article class="service">
+            <small>03 / Visual</small>
+            <h3>Design preview</h3>
+            <p>Wizualizacje przed realizacją. Kolor, bodykit, livery, felgi i układ całego projektu.</p>
+          </article>
+
+          <article class="service">
+            <small>04 / Motorsport</small>
+            <h3>Race identity</h3>
+            <p>Stylistyka motorsportowa: livery, prezentacja auta, agresywna forma i spójny branding projektu.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <span class="kicker">Projects</span>
+            <h2>Wizualny kierunek marki.</h2>
+          </div>
+          
+        </div>
+
+        <div class="projects">
+          <a class="project wide" href="assets/racecar-black-studio.png">
+            <img src="assets/racecar-black-studio.png" alt="Czarne auto wyścigowe w studio" />
+            <div class="project-info">
+              <strong>Race build</strong>
+              <span>ciemna oprawa, mocny livery, motorsport</span>
+            </div>
+          </a>
+
+          <a class="project" href="assets/racecar-concept-studio.png">
+            <img src="assets/racecar-concept-studio.png" alt="Koncepcyjny samochód wyścigowy w studio" />
+            <div class="project-info">
+              <strong>Concept car</strong>
+              <span>forma, proporcja, kierunek</span>
+            </div>
+          </a>
+
+          <a class="project" href="assets/golf-r-studio.jpg">
+            <img src="assets/golf-r-studio.jpg" alt="Zmodyfikowany czarny Volkswagen Golf" />
+            <div class="project-info">
+              <strong>Street build</strong>
+              <span>droga, stance, agresywny wygląd</span>
+            </div>
+          </a>
+
+          <a class="project" href="assets/cockpit-mkrc.png">
+            <img src="assets/cockpit-mkrc.png" alt="Kokpit auta wyścigowego" />
+            <div class="project-info">
+              <strong>Interior</strong>
+              <span>funkcja i klimat torowy</span>
+            </div>
+          </a>
+
+          <a class="project wide" href="assets/mkrc-design-board.png">
+            <img src="assets/mkrc-design-board.png" alt="Plansza koncepcyjna auta MKRC" />
+            <div class="project-info">
+              <strong>Design board</strong>
+              <span>wizualizacja projektu przed budową</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="wrap">
+        <div class="contact-card">
+          <div class="contact-copy">
+            <span class="kicker">Contact</span>
+            <h2>Masz auto lub projekt?</h2>
+            <p>Napisz, co chcesz zrobić. Tuning, tor, wizualizacja, projekt drogowy albo show car — ustalimy kierunek i lecimy konkretnie.</p>
+          </div>
+
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:biuro@mkrc.pl">
+              <span>E-mail</span>
+              <strong>biuro@mkrc.pl</strong>
+            </a>
+            <a class="contact-link" href="https://instagram.com/MKRC.pl" target="_blank" rel="noopener noreferrer">
+              <span>Instagram</span>
+              <strong>MKRC.pl</strong>
+            </a>
+            <div class="contact-link">
+              <span>Location</span>
+              <strong>Kraków</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> MK Racing Factory — Road & Track Performance.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
