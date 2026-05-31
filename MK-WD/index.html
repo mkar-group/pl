@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MK Web & Infrastructure | Strony, serwery i infrastruktura IT</title>
+  <meta name="description" content="MK Web & Infrastructure - strony internetowe, serwery, sieci LAN/Wi-Fi, monitoring IP, domeny, hosting, poczta firmowa, backupy i opieka techniczna dla firm." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --navy: #061425;
+      --navy-2: #0b1d33;
+      --blue: #0969ff;
+      --blue-2: #2f82ff;
+      --cyan: #12b5ff;
+      --text: #0c1726;
+      --muted: #5e6d82;
+      --soft: #e8eef7;
+      --line: rgba(9, 35, 65, 0.12);
+      --shadow: 0 24px 70px rgba(13, 41, 78, 0.12);
+      --shadow-soft: 0 16px 46px rgba(13, 41, 78, 0.08);
+      --container: 1220px;
+      --radius-lg: 30px;
+      --radius-md: 22px;
+      --radius-sm: 14px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 82% 5%, rgba(9, 105, 255, 0.13), transparent 32rem),
+        radial-gradient(circle at 0% 18%, rgba(18, 181, 255, 0.10), transparent 26rem),
+        linear-gradient(180deg, #f8fbff 0%, #f2f6fb 48%, #ffffff 100%);
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(8, 38, 76, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 38, 76, 0.035) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.55), transparent 74%);
+      z-index: -1;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(6, 20, 37, 0.08);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      display: block;
+      color: var(--navy);
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #29384d;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      transition: color 0.18s ease;
+    }
+
+    .nav a:hover {
+      color: var(--blue);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 14px 34px rgba(9, 105, 255, 0.22);
+    }
+
+    .hero {
+      padding: 64px 0 88px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border: 1px solid rgba(9, 105, 255, 0.16);
+      border-radius: 999px;
+      color: var(--blue);
+      background: rgba(9, 105, 255, 0.07);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 5px rgba(9, 105, 255, 0.12);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 20px 0 20px;
+      color: var(--navy);
+      font-size: clamp(44px, 7vw, 86px);
+      line-height: 0.94;
+      letter-spacing: -0.075em;
+    }
+
+    .lead {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 21px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: 0 12px 32px rgba(13, 41, 78, 0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(9, 105, 255, 0.28);
+      box-shadow: 0 18px 42px rgba(13, 41, 78, 0.12);
+    }
+
+    .btn-primary {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 16px 40px rgba(9, 105, 255, 0.24);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .stat {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 620px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, rgba(9, 105, 255, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.74));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 34px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 70% 18%, rgba(9,105,255,.20), transparent 18rem),
+        linear-gradient(145deg, #08172b 0%, #09213f 56%, #0c366d 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.10), 0 26px 70px rgba(9, 28, 54, 0.30);
+    }
+
+    .network-visual {
+      position: absolute;
+      inset: 34px;
+      border-radius: 26px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .network-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: 0.5;
+    }
+
+    .server {
+      position: absolute;
+      left: 38px;
+      top: 54px;
+      width: min(42%, 260px);
+      display: grid;
+      gap: 14px;
+      z-index: 2;
+    }
+
+    .server-row {
+      height: 72px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.94);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+      position: relative;
+    }
+
+    .server-row::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--blue);
+      box-shadow: 0 0 0 6px rgba(9,105,255,.12);
+    }
+
+    .server-row::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      width: 72px;
+      height: 22px;
+      border-radius: 8px;
+      transform: translateY(-50%);
+      background:
+        radial-gradient(circle at 8px 50%, var(--blue) 0 4px, transparent 5px),
+        radial-gradient(circle at 28px 50%, var(--blue) 0 4px, transparent 5px),
+        radial-gradient(circle at 48px 50%, var(--blue) 0 4px, transparent 5px);
+      opacity: 0.92;
+    }
+
+    .screen {
+      position: absolute;
+      right: 42px;
+      top: 80px;
+      width: min(48%, 350px);
+      aspect-ratio: 16/10;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.20);
+      z-index: 2;
+      padding: 18px;
+    }
+
+    .screen-top {
+      height: 12px;
+      width: 100%;
+      border-radius: 999px;
+      background: #d9e3f3;
+      margin-bottom: 18px;
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .screen-block {
+      min-height: 58px;
+      border-radius: 14px;
+      background: #ecf3ff;
+      border: 1px solid #dce7f6;
+    }
+
+    .screen-block.big {
+      grid-column: span 2;
+      min-height: 86px;
+      background: linear-gradient(135deg, rgba(9,105,255,.16), rgba(18,181,255,.10));
+    }
+
+    .lines {
+      position: absolute;
+      left: 138px;
+      right: 150px;
+      bottom: 138px;
+      height: 170px;
+      z-index: 1;
+    }
+
+    .line {
+      position: absolute;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,.18), var(--blue), var(--cyan));
+      transform-origin: left center;
+    }
+
+    .line:nth-child(1) { left: 0; top: 20px; width: 72%; transform: rotate(10deg); }
+    .line:nth-child(2) { left: 8%; top: 70px; width: 82%; transform: rotate(-4deg); }
+    .line:nth-child(3) { left: 4%; top: 122px; width: 65%; transform: rotate(7deg); }
+
+    .node {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border: 5px solid var(--blue);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      z-index: 3;
+    }
+
+    .node.n1 { left: 38%; bottom: 140px; }
+    .node.n2 { right: 86px; bottom: 188px; }
+    .node.n3 { right: 48px; bottom: 84px; }
+
+    .hero-note {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      bottom: 56px;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 18px 48px rgba(3,20,41,0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-note strong {
+      display: block;
+      color: var(--navy);
+      font-size: 17px;
+    }
+
+    .hero-note span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-note img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 34px;
+    }
+
+    .section-head h2 {
+      max-width: 760px;
+      margin-top: 14px;
+      color: var(--navy);
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 16px;
+      text-align: right;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .about-card,
+    .process-card,
+    .service-card,
+    .contact-card,
+    .contact-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .about-card {
+      padding: clamp(26px, 4vw, 42px);
+    }
+
+    .about-card h3 {
+      color: var(--navy);
+      font-size: clamp(25px, 3vw, 38px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 16px;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 26px;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      color: #26364d;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .check-list li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 5px rgba(9,105,255,.10);
+    }
+
+    .about-board {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 70% 25%, rgba(9,105,255,.18), transparent 20rem),
+        linear-gradient(135deg, #ffffff 0%, #edf4ff 100%);
+      box-shadow: var(--shadow-soft);
+      padding: 28px;
+    }
+
+    .dashboard {
+      position: absolute;
+      inset: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .dash-card {
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid rgba(9,35,65,.10);
+      border-radius: 22px;
+      background: rgba(255,255,255,.86);
+      box-shadow: 0 18px 46px rgba(13,41,78,.10);
+    }
+
+    .dash-card.dark {
+      color: #fff;
+      background: linear-gradient(135deg, #071a31, #0d376e);
+    }
+
+    .dash-card strong {
+      display: block;
+      color: inherit;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .dash-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dash-card.dark span {
+      color: rgba(255,255,255,.72);
+    }
+
+    .fake-bar {
+      height: 9px;
+      border-radius: 999px;
+      background: #dce7f6;
+      margin-top: 10px;
+    }
+
+    .fake-bar.blue {
+      width: 72%;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card {
+      min-height: 265px;
+      padding: 24px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(9,105,255,.24);
+      box-shadow: var(--shadow);
+    }
+
+    .service-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 17px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      font-weight: 900;
+      box-shadow: 0 16px 32px rgba(9,105,255,.20);
+    }
+
+    .service-card h3 {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .process-card {
+      padding: 22px;
+      min-height: 210px;
+    }
+
+    .process-card strong {
+      display: block;
+      color: var(--blue);
+      font-size: 14px;
+      margin-bottom: 38px;
+    }
+
+    .process-card h3 {
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .process-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .target {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .target-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .target-card.main {
+      color: #fff;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(18,181,255,.26), transparent 18rem),
+        linear-gradient(135deg, #071525, #0c2f5e);
+    }
+
+    .target-content {
+      padding: clamp(26px, 4vw, 42px);
+    }
+
+    .target-card h3 {
+      color: inherit;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+    }
+
+    .target-card p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .target-card.main p {
+      color: rgba(255,255,255,.72);
+    }
+
+    .target-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .target-tags span {
+      display: inline-flex;
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: var(--navy);
+      background: #edf4ff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .target-card.main .target-tags span {
+      color: #fff;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.13);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .contact-panel {
+      padding: clamp(26px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(9,105,255,.13), transparent 16rem),
+        rgba(255,255,255,.86);
+    }
+
+    .contact-panel h2 {
+      color: var(--navy);
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      margin: 14px 0;
+    }
+
+    .contact-panel p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px;
+    }
+
+    .contact-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+
+    .contact-card strong {
+      color: var(--navy);
+      font-size: clamp(17px, 2vw, 24px);
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card .arrow {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 14px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .target {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 560px;
+      }
+
+      .services-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 10px;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        gap: 16px;
+        padding-bottom: 4px;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero {
+        padding: 38px 0 64px;
+      }
+
+      .hero-stats,
+      .services-grid,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 500px;
+      }
+
+      .server {
+        left: 24px;
+        top: 40px;
+        width: 44%;
+      }
+
+      .server-row {
+        height: 60px;
+      }
+
+      .screen {
+        right: 24px;
+        top: 78px;
+        width: 48%;
+        padding: 12px;
+      }
+
+      .lines {
+        left: 70px;
+        right: 70px;
+        bottom: 130px;
+      }
+
+      .hero-note {
+        left: 22px;
+        right: 22px;
+        bottom: 22px;
+      }
+
+      .dashboard {
+        position: static;
+        grid-template-columns: 1fr;
+      }
+
+      .about-board {
+        min-height: auto;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .contact-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .contact-card .arrow {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(var(--container), calc(100% - 22px));
+      }
+
+      .brand-logo {
+        width: 50px;
+        height: 50px;
+      }
+
+      .brand-title {
+        font-size: 16px;
+        white-space: normal;
+      }
+
+      .brand-sub {
+        white-space: normal;
+      }
+
+      h1 {
+        font-size: clamp(40px, 13vw, 62px);
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 62px 0;
+      }
+
+      .hero-card {
+        min-height: 430px;
+        border-radius: 22px;
+      }
+
+      .hero-card::before,
+      .network-visual {
+        inset: 18px;
+        border-radius: 18px;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .server {
+        width: calc(100% - 48px);
+        left: 24px;
+      }
+
+      .lines {
+        left: 40px;
+        right: 40px;
+      }
+
+      .node.n2,
+      .node.n3 {
+        right: 28px;
+      }
+
+      .hero-note {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-note img {
+        display: none;
+      }
+
+      .dash-card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="MK Web & Infrastructure">
+        <img class="brand-logo" src="assets/logo-mkwi.png" alt="Logo MK Web & Infrastructure" />
+        <span>
+          <span class="brand-title">MK Web & Infrastructure</span>
+          <span class="brand-sub">Web • Servers • Networks</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Nawigacja">
+        <a href="#firma">Firma</a>
+        <a href="#uslugi">Usługi</a>
+        <a href="#proces">Proces</a>
+        <a href="#kontakt">Kontakt</a>
+        <a class="nav-cta" href="mailto:biuro@mkwi.pl">biuro@mkwi.pl</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="tag">Strony • Serwery • Sieci</span>
+          <h1>Strony internetowe, serwery i infrastruktura IT dla firm.</h1>
+          <p class="lead">
+            Projektujemy strony, konfigurujemy serwery, sieci i zaplecze techniczne, żeby firma miała wszystko spięte w jednym miejscu.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#kontakt">Skontaktuj się</a>
+            <a class="btn" href="#uslugi">Zobacz usługi</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>WEB</strong>
+              <span>strony firmowe i landing page</span>
+            </div>
+            <div class="stat">
+              <strong>IT</strong>
+              <span>serwery, domeny, hosting, poczta</span>
+            </div>
+            <div class="stat">
+              <strong>LAN</strong>
+              <span>sieci firmowe, Wi-Fi i monitoring IP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card" aria-label="Ilustracja infrastruktury IT">
+          <div class="network-visual">
+            <div class="server">
+              <div class="server-row"></div>
+              <div class="server-row"></div>
+              <div class="server-row"></div>
+            </div>
+
+            <div class="screen">
+              <div class="screen-top"></div>
+              <div class="screen-grid">
+                <div class="screen-block big"></div>
+                <div class="screen-block"></div>
+                <div class="screen-block"></div>
+              </div>
+            </div>
+
+            <div class="lines">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+
+            <div class="node n1"></div>
+            <div class="node n2"></div>
+            <div class="node n3"></div>
+          </div>
+
+          <div class="hero-note">
+            <span>
+              <strong>Jedna firma do strony i zaplecza IT.</strong>
+              <span>Strona, domena, hosting, poczta, sieć, monitoring i opieka techniczna.</span>
+            </span>
+            <img src="assets/logo-mkwi.png" alt="MK Web & Infrastructure" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="firma" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="tag">O firmie</span>
+            <h2>Nie tylko strona. Całe techniczne zaplecze firmy.</h2>
+          </div>
+          <p>
+            MK Web & Infrastructure łączy tworzenie stron internetowych z konfiguracją infrastruktury IT. Dzięki temu klient nie musi osobno szukać kogoś od strony, domeny, poczty, routera, serwera i monitoringu.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <h3>Robimy to od podstaw i składamy w całość.</h3>
+            <p>
+              Strona ma działać, poczta ma dochodzić, Wi-Fi ma mieć zasięg, monitoring ma nagrywać, a backup ma istnieć zanim będzie potrzebny. Bez zgadywania i bez prowizorki.
+            </p>
+
+            <ul class="check-list">
+              <li>strony internetowe dla firm i usług lokalnych</li>
+              <li>konfiguracja domen, hostingu i poczty firmowej</li>
+              <li>sieci LAN/Wi-Fi, routery, switche i access pointy</li>
+              <li>serwery, backupy, monitoring IP i opieka techniczna</li>
+            </ul>
+          </div>
+
+          <div class="about-board">
+            <div class="dashboard">
+              <div class="dash-card dark">
+                <strong>Web</strong>
+                <span>strona firmowa, landing page, SEO podstawowe</span>
+                <div class="fake-bar"></div>
+                <div class="fake-bar blue"></div>
+              </div>
+              <div class="dash-card">
+                <strong>Network</strong>
+                <span>LAN, Wi-Fi, router, switch, AP</span>
+                <div class="fake-bar"></div>
+                <div class="fake-bar blue"></div>
+              </div>
+              <div class="dash-card">
+                <strong>Servers</strong>
+                <span>serwery, backup, dostęp, zabezpieczenia</span>
+                <div class="fake-bar"></div>
+                <div class="fake-bar blue"></div>
+              </div>
+              <div class="dash-card dark">
+                <strong>Support</strong>
+                <span>opieka techniczna i rozwój infrastruktury</span>
+                <div class="fake-bar"></div>
+                <div class="fake-bar blue"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="uslugi" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="tag">Usługi</span>
+            <h2>Zakres prac MK Web & Infrastructure.</h2>
+          </div>
+          <p>
+            Wszystko, czego mała firma potrzebuje, żeby działać online i technicznie bez ciągłego gaszenia pożarów.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon">01</div>
+            <h3>Strony internetowe</h3>
+            <p>Strony firmowe, landing page, podstawowe SEO, responsywność i czytelna prezentacja oferty.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">02</div>
+            <h3>Domeny, hosting i poczta</h3>
+            <p>Konfiguracja domen, hostingu, certyfikatów SSL, poczty firmowej i podstawowych rekordów DNS.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">03</div>
+            <h3>Serwery firmowe</h3>
+            <p>Serwery plików, konta użytkowników, dostęp, uprawnienia, backup i uporządkowanie danych.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">04</div>
+            <h3>Sieci LAN/Wi-Fi</h3>
+            <p>Routery, switche, access pointy, okablowanie logiczne i stabilna sieć w biurze lub firmie.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">05</div>
+            <h3>Monitoring IP</h3>
+            <p>Kamery IP, rejestratory, dostęp zdalny i podstawowa konfiguracja pod firmę lub obiekt.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">06</div>
+            <h3>Opieka techniczna</h3>
+            <p>Wsparcie, poprawki, rozbudowa, backupy, zabezpieczenia i bieżące ogarnianie infrastruktury.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proces" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="tag">Proces</span>
+            <h2>Jak wygląda współpraca?</h2>
+          </div>
+          <p>
+            Bez lania wody. Najpierw ustalamy potrzeby, potem zakres, później wdrożenie i testy.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <strong>01</strong>
+            <h3>Rozpoznanie</h3>
+            <p>Sprawdzamy, czego firma potrzebuje: strony, poczty, sieci, serwera, monitoringu albo wszystkiego naraz.</p>
+          </article>
+
+          <article class="process-card">
+            <strong>02</strong>
+            <h3>Plan</h3>
+            <p>Dobieramy rozwiązanie, zakres prac i kolejność wdrożenia. Bez wciskania zbędnych rzeczy.</p>
+          </article>
+
+          <article class="process-card">
+            <strong>03</strong>
+            <h3>Wdrożenie</h3>
+            <p>Konfigurujemy stronę, hosting, sieć, urządzenia, dostęp, pocztę, backup i monitoring.</p>
+          </article>
+
+          <article class="process-card">
+            <strong>04</strong>
+            <h3>Testy i opieka</h3>
+            <p>Sprawdzamy działanie i zostawiamy firmę z działającym systemem, a nie z bałaganem.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container target">
+        <div class="target-card main">
+          <div class="target-content">
+            <span class="tag">Dla kogo</span>
+            <h3>Małe firmy, biura, lokale i usługi.</h3>
+            <p>
+              Najlepiej sprawdzamy się tam, gdzie firma potrzebuje strony internetowej i zaplecza IT, ale nie chce układać wszystkiego z pięcioma różnymi wykonawcami.
+            </p>
+
+            <div class="target-tags">
+              <span>firmy usługowe</span>
+              <span>biura</span>
+              <span>warsztaty</span>
+              <span>lokale</span>
+              <span>małe obiekty</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="target-card">
+          <div class="target-content">
+            <span class="tag">Podejście</span>
+            <h3>Prosto, czytelnie i technicznie poprawnie.</h3>
+            <p>
+              Nie chodzi o przepalone efekty i bezużyteczne bajery. Strona ma być przejrzysta, infrastruktura stabilna, a konfiguracja zrobiona tak, żeby dało się ją później rozwijać.
+            </p>
+
+            <div class="target-tags">
+              <span>responsywność</span>
+              <span>porządek w DNS</span>
+              <span>stabilna sieć</span>
+              <span>backup</span>
+              <span>opieka</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="section">
+      <div class="container contact-grid">
+        <div class="contact-panel">
+          <span class="tag">Kontakt</span>
+          <h2>Potrzebujesz strony albo infrastruktury IT?</h2>
+          <p>
+            Napisz, co trzeba zrobić. Strona firmowa, domena, hosting, poczta, sieć, serwer, monitoring albo całość od podstaw.
+          </p>
+        </div>
+
+        <div class="contact-list">
+          <a class="contact-card" href="mailto:biuro@mkwi.pl">
+            <span>
+              <span>E-mail</span>
+              <strong>biuro@mkwi.pl</strong>
+            </span>
+            <span class="arrow">→</span>
+          </a>
+
+          <a class="contact-card" href="https://instagram.com/MKWI.pl" target="_blank" rel="noopener noreferrer">
+            <span>
+              <span>Instagram</span>
+              <strong>MKWI.pl</strong>
+            </span>
+            <span class="arrow">→</span>
+          </a>
+
+          <div class="contact-card">
+            <span>
+              <span>Lokalizacja</span>
+              <strong>Kraków</strong>
+            </span>
+            <span class="arrow">IT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> MK Web & Infrastructure — strony internetowe, serwery i infrastruktura IT dla firm.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
