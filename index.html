@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grupa Spółek MKAR</title>
+  <meta name="description" content="Strona główna Grupy Spółek MKAR z odnośnikami do stron spółek i marek należących do grupy." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #05070b;
+      --bg-2: #0b111c;
+      --panel: rgba(13, 20, 32, 0.78);
+      --panel-2: rgba(255, 255, 255, 0.055);
+      --panel-hover: rgba(255, 255, 255, 0.095);
+      --text: #f8fafc;
+      --muted: #aab6c8;
+      --muted-2: #738096;
+      --gold: #d4af37;
+      --gold-2: #f3d36b;
+      --blue: #00a6d6;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-gold: rgba(212, 175, 55, 0.34);
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
+      --radius: 30px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 8%, rgba(212, 175, 55, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 12%, rgba(0, 166, 214, 0.13), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.06), transparent 35%),
+        linear-gradient(135deg, #030407 0%, #0b111c 52%, #05070b 100%);
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 78%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      position: relative;
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 4px 22px;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .topbar-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.8);
+    }
+
+    .topbar-link {
+      color: var(--muted);
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .topbar-link:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+        rgba(8, 12, 20, 0.82);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -140px;
+      top: -120px;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(212,175,55,0.22), transparent 66%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 32px;
+      min-height: 430px;
+      padding: clamp(28px, 5vw, 58px);
+    }
+
+    .brand-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 190px;
+      padding: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .brand-banner img {
+      width: min(100%, 760px);
+      height: auto;
+      display: block;
+    }
+
+    .brand-banner-fallback {
+      display: none;
+      align-items: center;
+      gap: clamp(22px, 4vw, 52px);
+      color: #07111f;
+    }
+
+    .fallback-icon {
+      position: relative;
+      width: clamp(110px, 17vw, 190px);
+      height: clamp(82px, 12vw, 136px);
+    }
+
+    .fallback-icon::before,
+    .fallback-icon::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 34%;
+      height: 100%;
+      background: #07111f;
+    }
+
+    .fallback-icon::before {
+      left: 0;
+      clip-path: polygon(0 0, 100% 38%, 100% 100%, 0 100%);
+    }
+
+    .fallback-icon::after {
+      right: 0;
+      clip-path: polygon(0 38%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .fallback-accent {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36%;
+      height: 24%;
+      background: var(--blue);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .fallback-wordmark {
+      font-size: clamp(42px, 9vw, 106px);
+      font-weight: 900;
+      letter-spacing: 0.34em;
+      line-height: 1;
+    }
+
+    .hero-copy {
+      max-width: 500px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 8px 13px;
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      border-radius: 999px;
+      color: #ffe89a;
+      background: rgba(212, 175, 55, 0.11);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(38px, 6vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 20px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--text);
+      background: rgba(255,255,255,0.07);
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .button-primary {
+      border-color: rgba(212,175,55,0.55);
+      color: #171717;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.11);
+      border-color: rgba(255,255,255,0.24);
+    }
+
+    .button-primary:hover {
+      background: linear-gradient(135deg, #ffe589, var(--gold));
+      border-color: rgba(212,175,55,0.75);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 42px 0 18px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(26px, 4vw, 40px);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .company-card {
+      position: relative;
+      min-height: 370px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--panel-2);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.26);
+      transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    }
+
+    .company-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.10), transparent 48%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .company-card:hover,
+    .company-card:focus-visible {
+      transform: translateY(-7px);
+      border-color: rgba(212, 175, 55, 0.42);
+      background: var(--panel-hover);
+      outline: none;
+    }
+
+    .company-logo-wrap {
+      position: relative;
+      min-height: 178px;
+      margin: 16px 16px 0;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 22px;
+      background: rgb(255, 255, 255);
+    }
+
+    .company-logo-wrap.dark {
+      background: #020305;
+      border: 1px solid rgba(212, 175, 55, 0.20);
+    }
+
+    .company-logo-wrap img {
+      max-width: 100%;
+      max-height: 145px;
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .company-content {
+      position: relative;
+      padding: 22px 22px 24px;
+    }
+
+    .company-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--gold-2);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .company-content h3 {
+      margin-bottom: 9px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .company-content p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 20px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .arrow {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--gold-2);
+      font-size: 20px;
+      transition: transform 0.22s ease;
+    }
+
+    .company-card:hover .arrow,
+    .company-card:focus-visible .arrow {
+      transform: translateX(3px);
+    }
+
+    .future-box {
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 24px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.035);
+      text-align: center;
+      font-size: 15px;
+    }
+
+    footer {
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.09);
+      color: rgba(170, 182, 200, 0.78);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /*
+      JAK DODAĆ KOLEJNĄ FIRMĘ:
+      1. Skopiuj jeden cały <a class="company-card">...</a>.
+      2. Zmień href, logo, nazwę, kategorię i opis.
+      3. Grid sam ułoży kafelki na komputerze i telefonie.
+    */
+
+    @media (max-width: 980px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .brand-banner {
+        order: -1;
+      }
+
+      .company-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding: 14px 12px 32px;
+      }
+
+      .topbar {
+        padding-bottom: 14px;
+      }
+
+      .topbar-link {
+        display: none;
+      }
+
+      .hero {
+        border-radius: 24px;
+      }
+
+      .hero-inner {
+        padding: 20px;
+        gap: 22px;
+      }
+
+      .brand-banner {
+        min-height: 130px;
+        padding: 14px;
+        border-radius: 18px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .section-head {
+        display: block;
+        margin-top: 30px;
+      }
+
+      .section-head p {
+        margin-top: 6px;
+        text-align: left;
+      }
+
+      .company-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .company-card {
+        min-height: auto;
+        border-radius: 22px;
+      }
+
+      .company-logo-wrap {
+        min-height: 145px;
+        margin: 12px 12px 0;
+        border-radius: 18px;
+      }
+
+      .company-logo-wrap img {
+        max-height: 112px;
+      }
+
+      .company-content {
+        padding: 18px 18px 20px;
+      }
+    }
+
+
+    /* === FIX: tylko responsywność + logo na desktopie, bez zmiany linków/HTML === */
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img,
+    svg,
+    video {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .page,
+    .hero,
+    .hero-inner,
+    .brand-banner,
+    .brand-banner-fallback,
+    .company-grid,
+    .company-card,
+    .company-content {
+      max-width: 100%;
+    }
+
+    .hero-copy,
+    .company-content,
+    .company-card {
+      min-width: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    span,
+    a {
+      overflow-wrap: anywhere;
+    }
+
+    .brand-banner {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .brand-banner img {
+      width: 100%;
+      max-width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .brand-banner-fallback {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fallback-wordmark {
+      max-width: 100%;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Desktop: logo nie ma już być gigantyczną rozlaną krową */
+    @media (min-width: 981px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      }
+
+      .brand-banner {
+        justify-self: center;
+        width: min(100%, 460px);
+        min-height: 260px;
+        padding: 28px;
+      }
+
+      .brand-banner img {
+        max-height: 220px;
+      }
+
+      .brand-banner-fallback {
+        flex-direction: column;
+        gap: 16px;
+        padding: 0;
+      }
+
+      .fallback-icon {
+        flex: 0 0 auto;
+        width: 130px;
+        height: 96px;
+      }
+
+      .fallback-wordmark {
+        font-size: clamp(44px, 4.6vw, 62px);
+        line-height: 1;
+        letter-spacing: 0.08em;
+        padding-left: 0.08em;
+      }
+    }
+
+    /* Telefony: zostaje ciasno, ale nic nie wychodzi poza ekran */
+    @media (max-width: 430px) {
+      .page {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .hero-inner {
+        padding: 18px;
+      }
+
+      .brand-banner {
+        min-height: 110px;
+        padding: 12px;
+      }
+
+      .brand-banner img {
+        max-height: 120px;
+      }
+
+      .brand-banner-fallback {
+        gap: 10px;
+      }
+
+      .fallback-icon {
+        width: 72px;
+        height: 54px;
+      }
+
+      .fallback-wordmark {
+        font-size: clamp(30px, 12vw, 44px);
+        letter-spacing: 0.08em;
+        padding-left: 0.08em;
+      }
+
+      .company-logo-wrap {
+        min-height: 130px;
+      }
+
+      .company-content h3 {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .page {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .hero-inner {
+        padding: 16px;
+      }
+
+      .eyebrow {
+        max-width: 100%;
+        white-space: normal;
+      }
+
+      .brand-banner {
+        min-height: 100px;
+      }
+
+      .company-logo-wrap {
+        padding: 12px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <span class="topbar-dot"></span>
+        <span>Grupa Spółek MKAR</span>
+      </div>
+      <a class="topbar-link" href="#spolki">Przejdź do spółek</a>
+    </header>
+
+    <section class="hero" aria-label="Grupa Spółek MKAR">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Centralna strona grupy</span>
+          <h1>Grupa Spółek MKAR</h1>
+          <p>Jedno miejsce prowadzące do marek, projektów i działalności należących do grupy. Wybierz poniżej stronę, do której chcesz przejść.</p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#spolki">Zobacz strony</a>
+          </div>
+        </div>
+
+        <div class="brand-banner">
+          <!-- Podmień src na faktyczny plik z banerem MKAR, np. assets/mkar-banner.png -->
+          <img src="assets/mkar-banner.png" alt="Logo Grupy Spółek MKAR" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+
+          <!-- Awaryjna wersja logo, gdy nie ma jeszcze pliku graficznego -->
+          <div class="brand-banner-fallback" aria-hidden="true">
+            <div class="fallback-icon"><span class="fallback-accent"></span></div>
+            <div class="fallback-wordmark">MKAR</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="spolki" aria-labelledby="companies-title">
+      <div class="section-head">
+        <h2 id="companies-title">Nasi partnerzy</h2>
+      </div>
+
+      <div class="company-grid">
+        <a class="company-card" href="ROJ-BUD/index.html" aria-label="Przejdź do strony ROJ-BUD">
+          <div class="company-logo-wrap">
+            <!-- Podmień src na faktyczny plik z logo ROJ-BUD -->
+            <img src="logo-roj-bud.png" alt="Logo ROJ-BUD" />
+          </div>
+          <div class="company-content">
+            <span class="company-kicker">Firma budowlana</span>
+            <h3>ROJ-BUD</h3>
+            <p>Usługi budowlane, prace ziemne, brukarstwo oraz realizacje dla klientów indywidualnych i firm.</p>
+            <div class="card-bottom">
+              <span>Otwórz stronę</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="company-card" href="MK-RC/index.html" aria-label="Przejdź do strony MK Racing Factory">
+          <div class="company-logo-wrap dark">
+            <!-- Podmień src na faktyczny plik z logo MK Racing Factory -->
+            <img src="logo-mk-rc.png" alt="Logo MK Racing Factory" />
+          </div>
+          <div class="company-content">
+            <span class="company-kicker">Motoryzacja i projekty specjalne</span>
+            <h3>MK Racing Factory</h3>
+            <p>Projekty motoryzacyjne, modyfikacje, wizualizacje, części i realizacje w stylistyce motorsportowej.</p>
+            <div class="card-bottom">
+              <span>Otwórz stronę</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="company-card" href="MK-WD/index.html" aria-label="Przejdź do strony MK Web & Infrastructure">
+          <div class="company-logo-wrap">
+            <!-- Podmień src na faktyczny plik z logo MK Web & Infrastructure -->
+            <img src="logo-mk-wi.png" alt="Logo MK Web & Infrastructure" />
+          </div>
+          <div class="company-content">
+            <span class="company-kicker">Web, sieci i serwery</span>
+            <h3>MK Web & Infrastructure</h3>
+            <p>Strony internetowe, serwery, sieci firmowe oraz kompletna infrastruktura IT dla biznesu.</p>
+            <div class="card-bottom">
+              <span>Otwórz stronę</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+   
+    </section>
+
+    <footer>
+      © <span id="year"></span> Grupa Spółek MKAR. Wszystkie prawa zastrzeżone.
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
